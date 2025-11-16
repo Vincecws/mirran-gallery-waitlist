@@ -3,6 +3,7 @@ import { useState } from "react";
 import SEO from "@/components/SEO";
 import StructuredData, { createOrganizationSchema } from "@/components/StructuredData";
 import creationOfAdam from "@/assets/creation-of-adam.png";
+import creationOfAdamMobile from "@/assets/creation-of-adam-mobile.jpeg";
 import { generateTitle, truncateDescription } from "@/utils/seoHelpers";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -19,7 +20,7 @@ const Landing = () => {
   );
 
   return (
-    <div className="min-h-screen bg-discover-depth">
+    <div className="min-h-screen">
       <SEO
         title={seoTitle}
         description={seoDescription}
@@ -31,12 +32,21 @@ const Landing = () => {
 
       {/* Hero Background */}
       <div className="fixed inset-0 z-0">
+        {/* Mobile Image - Close-up detail of hands */}
         <img 
-          src={creationOfAdam} 
-          alt="" 
-          className="w-full h-full object-cover object-center"
+          src={creationOfAdamMobile} 
+          alt="Creation of Adam detail - mobile view" 
+          className="md:hidden w-full h-full object-cover object-center"
           style={{ filter: 'blur(3px)', transform: 'scale(1.02)' }}
         />
+        {/* Desktop Image - Full scene */}
+        <img 
+          src={creationOfAdam} 
+          alt="Creation of Adam - desktop view" 
+          className="hidden md:block w-full h-full object-cover object-center"
+          style={{ filter: 'blur(3px)', transform: 'scale(1.02)' }}
+        />
+        {/* Gradient Overlay - Applied to both images */}
         <div className="absolute inset-0 bg-gradient-to-b from-black/45 via-black/50 to-black/60" />
       </div>
 

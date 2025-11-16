@@ -133,8 +133,8 @@ All colors MUST be HSL.
   overflow: hidden;
 }
 
-  /* Blurred background image layer */
-  .bg-discover-depth::before {
+  /* Blurred background image layer - REMOVED: discover-background.jpg deleted */
+  /* .bg-discover-depth::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -145,7 +145,7 @@ All colors MUST be HSL.
     filter: blur(5px);
     transform: scale(1.04);
     z-index: 0;
-  }
+  } */
 
   /* Gradient overlay layer */
   .bg-discover-depth::after {
@@ -237,7 +237,8 @@ All colors MUST be HSL.
   }
 
   /* Blurred background image layer */
-  .bg-rooms-depth::before {
+  /* REMOVED: room-background.jpg deleted */
+  /* .bg-rooms-depth::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -248,7 +249,7 @@ All colors MUST be HSL.
     filter: blur(5px);
     transform: scale(1.04);
     z-index: 0;
-  }
+  } */
 
   /* Gradient overlay layer */
   .bg-rooms-depth::after {
@@ -350,7 +351,8 @@ All colors MUST be HSL.
   }
 
   /* Blurred background image layer */
-  .bg-room-detail-depth::before {
+  /* REMOVED: room-background.jpg deleted */
+  /* .bg-room-detail-depth::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -361,7 +363,7 @@ All colors MUST be HSL.
     filter: blur(6px);
     transform: scale(1.05);
     z-index: 0;
-  }
+  } */
 
   /* Gradient overlay layer */
   .bg-room-detail-depth::after {
