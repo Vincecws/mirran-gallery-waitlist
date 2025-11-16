@@ -1,0 +1,1053 @@
+/* Swiper carousel styles - must be at the top */
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Light Gallery Theme - Museum Quality */
+    --background: 40 20% 97%;
+    --foreground: 0 0% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 15%;
+
+    /* Elegant gold/bronze accents */
+    --primary: 35 70% 50%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Warm beige for subtle elements */
+    --secondary: 40 15% 85%;
+    --secondary-foreground: 0 0% 20%;
+
+    --muted: 40 10% 92%;
+    --muted-foreground: 0 0% 45%;
+
+    --accent: 35 70% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 40 10% 88%;
+    --input: 40 10% 88%;
+    --ring: 35 70% 50%;
+
+    --radius: 0.25rem;
+
+    /* Gallery-specific tokens */
+    --gallery-frame: 0 0% 100%;
+    --gallery-highlight: 35 70% 50%;
+    --gallery-shadow: 0 0% 0%;
+    --exhibition-card: 40 15% 95%;
+    
+    /* Museum aesthetic - Beige & Brown palette */
+    --film-light-beige: 35 25% 88%;
+    --film-medium-beige: 35 30% 82%;
+    --film-cream: 40 30% 95%;
+    --film-warm-tan: 35 20% 90%;
+    --film-dark: 30 35% 15%;
+    --nav-bg: 40 25% 92%;
+    --artwork-detail-bg: 35 20% 78%;
+    --film-strip: 0 0% 16%;
+    
+    /* Smooth transitions */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Multi-layered background for depth */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      /* Subtle dark brown ambient base */
+      radial-gradient(ellipse 150% 120% at 30% 40%, 
+        hsla(18, 42%, 12%, 0.05) 0%, 
+        transparent 70%
+      ),
+      radial-gradient(ellipse 140% 110% at 70% 60%, 
+        hsla(32, 42%, 75%, 0.03) 0%, 
+        transparent 65%
+      );
+    z-index: -2;
+    pointer-events: none;
+  }
+
+  /* Subtle texture overlay for depth */
+  body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      /* Global ultra-subtle texture */
+      radial-gradient(circle at 1px 1px, rgba(217, 194, 167, 0.008) 1px, transparent 0);
+    background-size: 100px 100px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.2;
+  }
+
+  /* Discover Page Background - Welcoming gallery entrance at dusk */
+.bg-discover-depth {
+  position: relative;
+  overflow: hidden;
+}
+
+  /* Blurred background image layer */
+  .bg-discover-depth::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/discover-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+    transform: scale(1.04);
+    z-index: 0;
+  }
+
+  /* Gradient overlay layer */
+  .bg-discover-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      hsla(18, 42%, 12%, 0.45) 0%,
+      hsla(18, 42%, 10%, 0.60) 100%
+    );
+    z-index: 1;
+  }
+
+  /* Content positioning - keep this for the atmospheric gradients */
+  .bg-discover-depth > * {
+    position: relative;
+    z-index: 10;
+  }
+
+  .bg-discover-depth .layer-content {
+    position: absolute;
+    inset: 0;
+  background: 
+    /* Layer 8 (Deepest) - Infinite void backdrop */
+    radial-gradient(ellipse 250% 180% at 50% 100%, 
+      hsla(18, 42%, 8%, 0.35) 0%, 
+      transparent 75%
+    ),
+    /* Layer 7 - Left vignette darkness */
+    radial-gradient(ellipse 120% 140% at 0% 50%, 
+      hsla(20, 40%, 10%, 0.15) 0%, 
+      transparent 60%
+    ),
+    /* Layer 6 - Right vignette darkness */
+    radial-gradient(ellipse 120% 140% at 100% 50%, 
+      hsla(16, 38%, 9%, 0.12) 0%, 
+      transparent 55%
+    ),
+      /* Layer 5 - Floating dark brown panel (upper left) */
+      radial-gradient(ellipse 80% 70% at 15% 20%, 
+        hsla(18, 42%, 12%, 0.15) 0%, 
+        transparent 50%
+      ),
+      /* Layer 4 - Recessed beige glow (top right) */
+      radial-gradient(ellipse 90% 60% at 85% 15%, 
+        hsla(32, 42%, 75%, 0.08) 0%, 
+        transparent 45%
+      ),
+      /* Layer 3 - Center warm beige bloom */
+      radial-gradient(ellipse 180% 120% at 50% 40%, 
+        hsla(32, 42%, 75%, 0.12) 0%, 
+        transparent 65%
+      ),
+      /* Layer 2 - Bottom ambient beige glow */
+      radial-gradient(ellipse 140% 80% at 50% 95%, 
+        hsla(35, 38%, 68%, 0.10) 0%, 
+        transparent 55%
+      ),
+      /* Layer 1 (Nearest) - Subtle left corner highlight */
+      radial-gradient(circle 50% at 5% 85%, 
+        hsla(32, 42%, 75%, 0.06) 0%, 
+        transparent 40%
+      );
+    z-index: -2;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    transition: opacity 0.8s ease;
+  }
+
+  .bg-discover-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      /* Ultra-fine gallery wall texture */
+      radial-gradient(circle at 1px 1px, rgba(217, 194, 167, 0.012) 1px, transparent 0);
+    background-size: 80px 80px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.3;
+    mix-blend-mode: overlay;
+  }
+
+  /* Rooms Page Background - Deep gallery corridor */
+  .bg-rooms-depth {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Blurred background image layer */
+  .bg-rooms-depth::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/room-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: blur(5px);
+    transform: scale(1.04);
+    z-index: 0;
+  }
+
+  /* Gradient overlay layer */
+  .bg-rooms-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      hsla(18, 42%, 10%, 0.45) 0%,
+      hsla(18, 42%, 8%, 0.60) 100%
+    );
+    z-index: 1;
+  }
+
+  /* Content positioning */
+  .bg-rooms-depth > * {
+    position: relative;
+    z-index: 10;
+  }
+
+  .bg-rooms-depth .layer-content {
+    position: absolute;
+    inset: 0;
+    background: 
+      /* Layer 10 (Deepest) - Void foundation */
+      radial-gradient(ellipse 280% 200% at 50% 50%, 
+        hsla(18, 42%, 6%, 0.42) 0%, 
+        transparent 80%
+      ),
+      /* Layer 9 - Top vignette */
+      radial-gradient(ellipse 200% 100% at 50% 0%, 
+        hsla(20, 40%, 8%, 0.18) 0%, 
+        transparent 60%
+      ),
+      /* Layer 8 - Bottom vignette */
+      radial-gradient(ellipse 200% 100% at 50% 100%, 
+        hsla(16, 38%, 7%, 0.15) 0%, 
+        transparent 55%
+      ),
+      /* Layer 7 - Floating dark panel (left side) */
+      radial-gradient(ellipse 100% 130% at 10% 50%, 
+        hsla(18, 42%, 12%, 0.12) 0%, 
+        transparent 55%
+      ),
+      /* Layer 6 - Recessed dark panel (right side) */
+      radial-gradient(ellipse 90% 120% at 90% 50%, 
+        hsla(18, 42%, 12%, 0.09) 0%, 
+        transparent 50%
+      ),
+      /* Layer 5 - Warm beige glow (upper center) */
+      radial-gradient(ellipse 150% 80% at 50% 20%, 
+        hsla(32, 42%, 75%, 0.08) 0%, 
+        transparent 60%
+      ),
+      /* Layer 4 - Beige bloom (center) */
+      radial-gradient(ellipse 200% 140% at 50% 50%, 
+        hsla(32, 42%, 75%, 0.08) 0%, 
+        transparent 70%
+      ),
+      /* Layer 3 - Soft beige accent (lower left) */
+      radial-gradient(circle 60% at 20% 85%, 
+        hsla(35, 38%, 68%, 0.05) 0%, 
+        transparent 45%
+      ),
+      /* Layer 2 - Beige highlight (upper right) */
+      radial-gradient(circle 55% at 80% 15%, 
+        hsla(32, 42%, 75%, 0.04) 0%, 
+        transparent 40%
+      ),
+      /* Layer 1 (Nearest) - Subtle corner glow */
+      radial-gradient(circle 40% at 95% 95%, 
+        hsla(32, 42%, 75%, 0.03) 0%, 
+        transparent 35%
+      );
+    z-index: -2;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    transition: opacity 0.8s ease;
+  }
+
+  .bg-rooms-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      /* Fine gallery texture with slight warmth */
+      radial-gradient(circle at 1px 1px, rgba(217, 194, 167, 0.015) 1px, transparent 0);
+    background-size: 75px 75px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.35;
+    mix-blend-mode: overlay;
+  }
+
+  /* Individual Room Detail - Intimate gallery viewing space at night */
+  .bg-room-detail-depth {
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Blurred background image layer */
+  .bg-room-detail-depth::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url('/room-background.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    filter: blur(6px);
+    transform: scale(1.05);
+    z-index: 0;
+  }
+
+  /* Gradient overlay layer */
+  .bg-room-detail-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      hsla(18, 42%, 9%, 0.45) 0%,
+      hsla(18, 42%, 7%, 0.60) 100%
+    );
+    z-index: 1;
+  }
+
+  /* Content positioning */
+  .bg-room-detail-depth > * {
+    position: relative;
+    z-index: 10;
+  }
+
+  .bg-room-detail-depth .layer-content {
+    position: absolute;
+    inset: 0;
+    background: 
+      /* Layer 12 (Deepest) - Infinite gallery void */
+      radial-gradient(ellipse 300% 220% at 50% 50%, 
+        hsla(18, 42%, 5%, 0.48) 0%, 
+        transparent 85%
+      ),
+      /* Layer 11 - Top vignette (strongest) */
+      radial-gradient(ellipse 220% 110% at 50% 0%, 
+        hsla(20, 40%, 7%, 0.21) 0%, 
+        transparent 65%
+      ),
+      /* Layer 10 - Bottom vignette */
+      radial-gradient(ellipse 220% 110% at 50% 100%, 
+        hsla(16, 38%, 6%, 0.18) 0%, 
+        transparent 60%
+      ),
+      /* Layer 9 - Left edge darkness */
+      radial-gradient(ellipse 80% 150% at 0% 50%, 
+        hsla(18, 42%, 8%, 0.15) 0%, 
+        transparent 50%
+      ),
+      /* Layer 8 - Right edge darkness */
+      radial-gradient(ellipse 80% 150% at 100% 50%, 
+        hsla(18, 42%, 8%, 0.13) 0%, 
+        transparent 48%
+      ),
+      /* Layer 7 - Floating dark panel (upper left) */
+      radial-gradient(ellipse 90% 80% at 15% 20%, 
+        hsla(18, 42%, 12%, 0.15) 0%, 
+        transparent 55%
+      ),
+      /* Layer 6 - Recessed dark panel (lower right) */
+      radial-gradient(ellipse 85% 75% at 85% 80%, 
+        hsla(18, 42%, 12%, 0.12) 0%, 
+        transparent 50%
+      ),
+      /* Layer 5 - Large warm beige bloom (center) */
+      radial-gradient(ellipse 220% 160% at 50% 45%, 
+        hsla(32, 42%, 75%, 0.10) 0%, 
+        transparent 75%
+      ),
+      /* Layer 4 - Upper beige glow */
+      radial-gradient(ellipse 160% 90% at 50% 15%, 
+        hsla(32, 42%, 75%, 0.07) 0%, 
+        transparent 65%
+      ),
+      /* Layer 3 - Soft beige accent (left mid) */
+      radial-gradient(circle 65% at 25% 50%, 
+        hsla(35, 38%, 68%, 0.05) 0%, 
+        transparent 48%
+      ),
+      /* Layer 2 - Beige highlight (right mid) */
+      radial-gradient(circle 60% at 75% 50%, 
+        hsla(32, 42%, 75%, 0.05) 0%, 
+        transparent 45%
+      ),
+      /* Layer 1 (Nearest) - Bottom center glow */
+      radial-gradient(ellipse 120% 60% at 50% 100%, 
+        hsla(32, 42%, 75%, 0.06) 0%, 
+        transparent 50%
+      );
+    z-index: -2;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    transition: opacity 0.8s ease;
+  }
+
+  .bg-room-detail-depth::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: 
+      /* Premium gallery canvas texture */
+      radial-gradient(circle at 1px 1px, rgba(217, 194, 167, 0.018) 1px, transparent 0);
+    background-size: 70px 70px;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+  }
+
+  /* Gallery typography */
+  .gallery-title {
+    @apply font-serif text-5xl md:text-7xl lg:text-8xl font-light tracking-tight;
+    color: hsl(var(--foreground) / 0.9);
+  }
+
+  .gallery-subtitle {
+    @apply font-serif text-xl md:text-2xl font-light tracking-wide;
+    color: hsl(var(--muted-foreground));
+  }
+
+  /* Floating title with depth */
+.floating-title {
+  position: relative;
+  z-index: 1;
+  text-shadow: 
+    0 2px 8px rgba(0, 0, 0, 0.5),
+    0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+  .floating-title h1 {
+    letter-spacing: 0.02em;
+    transform: translateZ(10px);
+  }
+
+  /* 3D Perspective container */
+.perspective-container {
+  perspective: 2000px;
+  perspective-origin: center center;
+  overflow: visible;
+  position: relative;
+  z-index: 10;
+}
+
+  /* Define depth layers */
+  .layer-background {
+    z-index: 1;
+  }
+
+  .layer-content {
+    z-index: 10;
+    position: relative;
+  }
+
+  .layer-artwork {
+    z-index: 20;
+    position: relative;
+  }
+
+  .layer-controls {
+    z-index: 30;
+    position: relative;
+  }
+
+  .layer-overlay {
+    z-index: 40;
+  }
+
+  /* Sidebar with frosted glass effect */
+  .sidebar-glass {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    border-right: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 
+      4px 0 24px rgba(0, 0, 0, 0.06),
+      2px 0 12px rgba(0, 0, 0, 0.04);
+  }
+
+  /* Parallax layer effect */
+  .parallax-layer {
+    transition: transform 0.3s ease-out;
+  }
+
+  /* Smooth scrollbar for carousel */
+  .carousel-container::-webkit-scrollbar {
+    display: none;
+  }
+
+  .carousel-container {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* HORIZONTAL CAROUSEL STYLES - 3-4 artworks side-by-side */
+  .swiper-horizontal {
+    @apply w-full pb-12;
+  }
+
+  .artwork-card {
+    @apply w-full;
+  }
+
+  .artwork-frame {
+    @apply overflow-hidden;
+    height: 44vh;
+    border-radius: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .artwork-frame:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    transform: translateY(-4px) scale(1.01);
+  }
+
+  /* Enhanced overlay with depth and glass effect */
+  .artwork-info-overlay {
+    @apply absolute inset-0 flex flex-col justify-end p-6 md:p-8;
+    background: 
+      linear-gradient(
+        to top,
+        rgba(255, 255, 255, 0.98) 0%,
+        rgba(255, 255, 255, 0.90) 30%,
+        rgba(255, 255, 255, 0.60) 60%,
+        transparent 100%
+      );
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 0.4s ease, backdrop-filter 0.4s ease;
+    border-radius: 16px;
+  }
+
+  .group:hover .artwork-info-overlay {
+    opacity: 1;
+    backdrop-filter: blur(12px);
+  }
+
+  /* Dark text on light overlay */
+  .artwork-info-overlay h3 {
+    @apply text-foreground;
+  }
+
+  .artwork-info-overlay p {
+    @apply text-foreground/70;
+  }
+
+  /* RESPONSIVE STYLES - Custom pagination for dark theme */
+  .swiper-pagination-bullet {
+    @apply bg-foreground/40 w-2 h-2 opacity-100;
+    transition: var(--transition-smooth);
+  }
+
+  .swiper-pagination-bullet-active {
+    @apply bg-primary w-8;
+  }
+
+  .swiper-pagination-horizontal {
+    @apply bottom-6;
+  }
+
+  /* Swiper Creative Effect Optimizations */
+  .swiper-slide {
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                opacity 1.2s ease;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+  }
+
+  /* Parallax layer enhancements */
+  [data-swiper-parallax] {
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform, opacity;
+  }
+
+  /* Performance optimization */
+  .swiper-slide-active [data-swiper-parallax] {
+    transform: translateZ(0);
+  }
+
+  /* Add subtle blur effect during transition */
+  .swiper-slide:not(.swiper-slide-active) {
+    filter: blur(3px);
+    transition: filter 0.8s ease;
+  }
+
+  .swiper-slide-active {
+    filter: blur(0);
+  }
+
+  /* Navigation buttons with glass effect */
+  .swiper-button-next,
+  .swiper-button-prev {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 
+      0 8px 16px rgba(0, 0, 0, 0.08),
+      0 4px 8px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease;
+    top: auto;
+    bottom: 20px;
+  }
+
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: hsl(var(--primary) / 0.3);
+  }
+
+  .swiper-button-next {
+    right: 20px;
+  }
+
+  .swiper-button-prev {
+    right: 100px;
+    left: auto;
+  }
+
+  .swiper-button-next::after,
+  .swiper-button-prev::after {
+    font-size: 20px;
+    color: hsl(var(--foreground));
+    font-weight: 600;
+  }
+
+  /* MAIN ROOMS CAROUSEL - Staggered vertical offset effect */
+  .swiper-main-rooms .swiper-slide {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* MAIN ROOMS CAROUSEL - 7-Position Vertical Staircase */
+  @media (min-width: 1024px) {
+    /* Position 1 - Leftmost partial (lowest) */
+    .swiper-main-rooms .swiper-slide:nth-child(1):not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) {
+      transform: translateY(60px);
+    }
+    
+    /* Position 2 */
+    .swiper-main-rooms .swiper-slide:nth-child(2):not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) {
+      transform: translateY(40px);
+    }
+    
+    /* Position 3 */
+    .swiper-main-rooms .swiper-slide:nth-child(3):not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) {
+      transform: translateY(20px);
+    }
+    
+    /* Position 4 - Center (middle depth) */
+    .swiper-main-rooms .swiper-slide:nth-child(4):not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) {
+      transform: translateY(0px);
+    }
+    
+    /* Position 5 */
+    .swiper-main-rooms .swiper-slide:nth-child(5):not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) {
+      transform: translateY(-20px);
+    }
+    
+    /* Position 6 */
+    .swiper-main-rooms .swiper-slide:nth-child(6):not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) {
+      transform: translateY(-40px);
+    }
+    
+    /* Position 7 - Rightmost partial (highest) */
+    .swiper-main-rooms .swiper-slide:nth-child(7):not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) {
+      transform: translateY(-60px);
+    }
+
+    /* Hover effect */
+    .swiper-main-rooms .swiper-slide:not(:has(.h-48)):not(:has(.h-56)):not(:has(.h-64)) .artwork-frame:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  /* Allow room cards to extend beyond Swiper container bounds */
+  .swiper-main-rooms,
+  .swiper-main-rooms .swiper-wrapper {
+    overflow: visible !important;
+  }
+
+  /* ROOM CAROUSEL - JavaScript-driven 7-card staircase */
+  .swiper-room-carousel {
+    padding-bottom: 0 !important;
+  }
+  
+  .swiper-room-carousel .swiper-slide {
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Base transition for all cards - JS will apply transforms */
+  @media (min-width: 1024px) {
+    .swiper-room-carousel .swiper-slide .artwork-card {
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    /* Hover effect - slight lift */
+    .swiper-room-carousel .swiper-slide .artwork-frame:hover {
+      transform: scale(1.03);
+    }
+  }
+
+  /* Allow room cards to extend beyond Swiper container bounds */
+  .swiper-room-carousel,
+  .swiper-room-carousel .swiper-wrapper {
+    overflow: visible !important;
+  }
+
+  /* Allow artwork cards to extend beyond Swiper container bounds */
+  .swiper-horizontal,
+  .swiper-horizontal .swiper-wrapper {
+    overflow: visible !important;
+  }
+
+  /* Staggered animation entrance */
+  .swiper-slide {
+    opacity: 0;
+    animation: fadeInDepth 0.8s ease-out forwards;
+  }
+
+  .swiper-slide:nth-child(1) { animation-delay: 0.1s; }
+  .swiper-slide:nth-child(2) { animation-delay: 0.2s; }
+  .swiper-slide:nth-child(3) { animation-delay: 0.3s; }
+  .swiper-slide:nth-child(4) { animation-delay: 0.4s; }
+  .swiper-slide:nth-child(5) { animation-delay: 0.5s; }
+  .swiper-slide:nth-child(6) { animation-delay: 0.6s; }
+
+  @keyframes fadeInDepth {
+    from {
+      opacity: 0;
+      transform: translateZ(-100px) scale(0.9);
+    }
+    to {
+      opacity: 1;
+      transform: translateZ(0) scale(1);
+    }
+  }
+
+  /* Artwork Modal Animations */
+  @keyframes slide-in-bottom {
+    from {
+      opacity: 0;
+      transform: translateY(100px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slide-in-left {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-bottom {
+    animation: slide-in-bottom 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-in-left {
+    animation: slide-in-left 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .delay-100 { animation-delay: 0.1s; opacity: 0; }
+  .delay-200 { animation-delay: 0.2s; opacity: 0; }
+
+  /* Museum Polaroid Poster */
+  .museum-poster {
+    background: hsla(40, 30%, 95%, 0.60);
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .museum-poster-image {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .museum-label {
+    padding: 1.25rem 1.5rem;
+  }
+
+  .museum-label-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: hsl(var(--film-dark));
+  }
+
+  .museum-label-meta {
+    font-size: 0.875rem;
+    color: hsl(var(--film-dark) / 0.7);
+    line-height: 1.6;
+  }
+
+  /* Film modal typography */
+  .film-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-offset: 8px;
+    line-height: 1.1;
+    color: hsl(var(--film-dark));
+  }
+
+  .film-tag {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1.5px solid currentColor;
+    border-radius: 9999px;
+    display: inline-block;
+    color: hsl(var(--film-dark));
+  }
+
+  .film-metadata {
+    font-size: 0.875rem;
+    line-height: 1.8;
+    text-transform: uppercase;
+    letter-spacing: 0.025em;
+    color: hsl(var(--film-dark) / 0.8);
+  }
+
+  .film-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: hsl(var(--film-dark));
+    color: hsl(var(--film-cream));
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: 9999px;
+    transition: all 0.3s ease;
+  }
+
+  .film-button:hover {
+    background: hsl(var(--film-dark) / 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Hide navigation on small screens for cleaner mobile experience */
+  @media (max-width: 768px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+      @apply hidden;
+    }
+    
+    .film-poster-frame {
+      padding: 1.5rem 2rem;
+    }
+    
+    .film-matte {
+      padding: 1.5rem;
+    }
+  }
+}
+
+/* ============================================
+   ROOM ARTWORK CAROUSEL STYLES
+   ============================================ */
+
+/* Grid Layout for Room Artworks */
+.room-artwork-grid {
+  @apply grid gap-8;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .room-artwork-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Individual Artwork Item */
+.room-artwork-item {
+  @apply flex flex-col transition-transform duration-300;
+}
+
+.room-artwork-item:hover {
+  @apply transform scale-105;
+}
+
+/* Artwork Frame */
+.room-artwork-frame {
+  @apply relative overflow-hidden rounded-lg border border-border/30 shadow-lg;
+  aspect-ratio: 4/3;
+  background: hsl(var(--museum-shadow) / 0.05);
+}
+
+.room-artwork-image {
+  @apply w-full h-full object-cover transition-transform duration-500;
+}
+
+.room-artwork-item:hover .room-artwork-image {
+  @apply scale-110;
+}
+
+/* Overlay on Hover */
+.room-artwork-overlay {
+  @apply absolute inset-0 bg-background/80 backdrop-blur-sm;
+  @apply flex items-center justify-center;
+  @apply opacity-0 transition-opacity duration-300;
+  @apply text-foreground font-medium;
+}
+
+.room-artwork-item:hover .room-artwork-overlay {
+  @apply opacity-100;
+}
+
+/* Artwork Info Below Frame */
+.room-artwork-info {
+  @apply mt-4 space-y-1 text-center;
+}
+
+/* Lightbox Customization */
+.room-artwork-lightbox {
+  @apply fixed inset-0 z-50;
+  @apply bg-background/95 backdrop-blur-xl;
+  @apply flex items-center justify-center;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===================================================================
+   MONET MASONRY GRID: Dense, immersive, zero-gap art environment
+   =================================================================== */
+
+.monet-grid-container {
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: visible;
+}
+
+
+/* ===================================================================
+   MASONRY LAYOUT STYLES - For Saved Artworks Page
+   =================================================================== */
+
+/* Masonry column styles */
+.masonry-column {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Drag handle cursor */
+.drag-handle {
+  cursor: grab;
+}
+
+.drag-handle:active {
+  cursor: grabbing;
+}
+
+/* Artwork card transitions */
+.artwork-card {
+  transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.3s ease;
+}
