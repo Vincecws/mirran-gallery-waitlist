@@ -1,73 +1,48 @@
-# Welcome to your Lovable project
+# Mirran Gallery Discovery
 
-## Project info
+Mirran Gallery Discovery is a Vite + React + TypeScript single-page application that showcases featured exhibitions, artists, and waitlist registration for the Mirran digital art gallery.
 
-**URL**: https://lovable.dev/projects/31a2fd7d-7300-4547-9b2e-e9262f08fac9
+## Tech Stack
 
-## How can I edit this code?
+- React 18 with TypeScript
+- Vite 5 + SWC React plugin
+- Tailwind CSS & shadcn/ui components
+- Supabase client
+- TanStack Query
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/31a2fd7d-7300-4547-9b2e-e9262f08fac9) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+## Getting Started
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+git clone <repo-url>
+cd mirran-gallery-discovery-60-main
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The dev server runs on http://localhost:5173 by default. Update environment variables in `.env` as needed (see `.env.example` if present).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## Available Scripts
 
-**Use GitHub Codespaces**
+- `npm run dev` – start Vite in development mode
+- `npm run build` – create an optimized production build
+- `npm run preview` – preview the production build locally
+- `npm run lint` – run ESLint
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## Deployment
 
-## What technologies are used for this project?
+1. Build the project with `npm run build`.
+2. Deploy the contents of the `dist/` folder to your static host of choice (Vercel, Netlify, Cloudflare Pages, etc.).
+3. Configure your hosting provider for custom domains/SSL as needed.
 
-This project is built with:
+## Project Structure Highlights
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+- `src/pages` – route-level components such as the landing page
+- `src/components` – UI building blocks, SEO helpers, and forms
+- `src/assets` – static images used throughout the experience
+- `public` – static files served as-is (favicons, sitemap, robots.txt)
 
-## How can I deploy this project?
+## Contributing
 
-Simply open [Lovable](https://lovable.dev/projects/31a2fd7d-7300-4547-9b2e-e9262f08fac9) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+1. Create a feature branch.
+2. Make your changes and ensure lint/build passes.
+3. Open a pull request describing the change and any required environment updates.
